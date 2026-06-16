@@ -1,28 +1,58 @@
 # Quantum Galton Board
 
-An interactive visualization of photon-like random walks inspired by the Galton board and quantum path experiments.
+An interactive and computational exploration of photon-like random walks, quantum interference, and measurement in a Galton-board-inspired lattice.
+
+## Overview
+
+This project investigates how probability amplitudes evolve through a branching lattice. It includes both a browser-based visualization and Python simulations inspired by quantum walks and photon interference.
+
+## Repository Structure
+
+```text
+web/
+└── galton_board.html
+    Interactive browser visualization
+
+python/
+├── distribution_simulation.py
+├── interference_animation.py
+└── measurement_simulation.py
+```
 
 ## Features
 
-* Animated photon trajectories
-* Random left/right path selection
-* Colorful photon trails
-* Peg lattice visualization
-* Reset and photon spawning controls
+* Interactive photon-path visualization
+* Quantum-inspired amplitude propagation
+* Probability distribution analysis
+* Wavefunction evolution animation
+* Measurement and path reconstruction simulation
 
-## How It Works
+## Technologies
 
-Each photon starts at the top of the board and randomly moves left or right at every peg. Over many photons, the paths demonstrate the statistical behavior of a random walk, similar to the distribution observed in a Galton board.
-
-## Technologies Used
-
-* HTML5
-* CSS3
+* HTML5 Canvas
 * JavaScript
-* Canvas API
+* Python
+* NumPy
+* Matplotlib
 
-## Run Locally
+## Running the Simulations
 
-1. Download or clone the repository.
-2. Open `index.html` in a web browser.
+```bash
+pip install numpy matplotlib
+```
 
+Run any simulation:
+
+```bash
+python distribution_simulation.py
+python interference_animation.py
+python measurement_simulation.py
+```
+
+## Future Work
+
+* True multi-path interference
+* Quantum random walks
+* Decoherence modeling
+* Interactive parameter controls
+* Detector and histogram analysis
