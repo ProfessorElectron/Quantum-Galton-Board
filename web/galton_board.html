@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <title>Quantum Galton Board</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: monospace;
+      text-align: center;
+    }
+    canvas {
+      display: block;
+      margin: auto;
+      background: #000;
+    }
+    button {
+      margin: 5px;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Quantum Galton Board (Photon Paths)</h2>
+<button onclick="addPhoton()">Add Photon</button>
+<button onclick="reset()">Reset</button>
+
+<canvas id="canvas" width="800" height="600"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const rows = 16;
+const spacing = 35;
+const startX = canvas.width / 2;
+const startY = 60;
+
+let photons = [];
+
+function randomPhotonColor() {
+  const hue = Math.floor(Math.random() * 360);
+  return `hsla(${hue}, 100%, 60%, 0.7)`;
+}
+
+
+class Photon {
+  constructor() {
+    this.r = 0;
+    this.x = 0;
+    this.path = [{ r: 0, x: 0 }];
+    this.done = false;
+    const hue = Math.floor(Math.random() * 360);
+    this.color = `hsla(${hue}, 100%, 60%, 0.4)`;
+
+  }
+
+  step() {
+    if (this.done) return;
+
+    if (this.r >= rows - 1) {
+      this.done = true;
+      return;
+    }
+
+    // Probabilistic left/right choice
+    this.x += Math.random() < 0.5 ? -1 : 1;
+    this.r += 1;
+    this.path.push({ r: this.r, x: this.x });
+  }
+
+  draw() {
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+
+    this.path.forEach((p, i) => {
+      const px = startX + p.x * spacing;
+      const py = startY + p.r * spacing;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    });
+
+    ctx.stroke();
+
+    // Draw photon head
+    const head = this.path[this.path.length - 1];
+    const hx = startX + head.x * spacing;
+    const hy = startY + head.r * spacing;
+
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(hx, hy, 4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function drawPegs() {
+  ctx.strokeStyle = "#444";
+  for (let r = 0; r < rows; r++) {
+    for (let c = -r; c <= r; c += 2) {
+      const px = startX + c * spacing;
+      const py = startY + r * spacing;
+      ctx.beginPath();
+      ctx.arc(px, py, 3, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  }
+}
+
+function addPhoton() {
+  photons.push(new Photon());
+}
+
+function reset() {
+  photons = [];
+}
+
+function animate() {
+  // Fade slowly so paths remain visible
+  ctx.fillStyle = "rgba(0,0,0,0.15)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  drawPegs();
+
+  photons.forEach(p => {
+    p.step();
+    p.draw();
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
