@@ -68,7 +68,6 @@ class Photon {
       return;
     }
 
-    // Probabilistic left/right choice
     this.x += Math.random() < 0.5 ? -1 : 1;
     this.r += 1;
     this.path.push({ r: this.r, x: this.x });
@@ -88,7 +87,6 @@ class Photon {
 
     ctx.stroke();
 
-    // Draw photon head
     const head = this.path[this.path.length - 1];
     const hx = startX + head.x * spacing;
     const hy = startY + head.r * spacing;
@@ -122,7 +120,6 @@ function reset() {
 }
 
 function animate() {
-  // Fade slowly so paths remain visible
   ctx.fillStyle = "rgba(0,0,0,0.15)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 

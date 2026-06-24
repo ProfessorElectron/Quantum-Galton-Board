@@ -2,19 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-# Parameters
 rows = 40
 cols = 2 * rows + 1
 
-# Initialize wavefunction
 psi = np.zeros((rows, cols), dtype=complex)
 psi[0, cols // 2] = 1.0 + 0j
 
-# Beam splitter (introduces phase → interference)
 BS = (1 / np.sqrt(2)) * np.array([[1, 1j],
                                   [1j, 1]])
 
-# Store history
 history = [np.abs(psi)**2]
 
 for r in range(rows - 1):
@@ -30,7 +26,6 @@ for r in range(rows - 1):
     psi = new_psi
     history.append(np.abs(psi)**2)
 
-# --- Animation ---
 fig, ax = plt.subplots()
 img = ax.imshow(history[0], cmap="inferno", origin="upper")
 ax.set_title("Quantum Galton Board — Photon Interference")

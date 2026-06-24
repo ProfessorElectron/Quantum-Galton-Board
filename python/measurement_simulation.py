@@ -5,7 +5,6 @@ from matplotlib.animation import FuncAnimation
 rows = 25
 cols = 2 * rows + 1
 
-# Wavefunction
 psi = np.zeros((rows, cols), dtype=complex)
 psi[0, cols // 2] = 1.0
 
@@ -24,12 +23,10 @@ for r in range(rows - 1):
     psi = new_psi
     history.append(np.abs(psi)**2)
 
-# --- Measurement ---
 prob = np.abs(psi[-1])**2
 prob /= prob.sum()
 final_pos = np.random.choice(cols, p=prob)
 
-# Backtrack a single photon path
 path = [(rows - 1, final_pos)]
 c = final_pos
 
@@ -47,7 +44,6 @@ for r in range(rows - 1, 0, -1):
 
 path = path[::-1]
 
-# --- Animation ---
 fig, ax = plt.subplots()
 img = ax.imshow(history[0], cmap="gray", origin="upper")
 line, = ax.plot([], [], color="lime", lw=2)
